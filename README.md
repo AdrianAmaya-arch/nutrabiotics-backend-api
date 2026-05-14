@@ -247,7 +247,7 @@ Use the following credentials to test authenticated endpoints:
 ```json
 {
   "email": "admin@test.com",
-  "password": "Admin123*"
+  "password": "admin123"
 }
 ```
 
