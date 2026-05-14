@@ -238,6 +238,66 @@ http://localhost:3000/api
 
 ---
 
+# Default Test Credentials
+
+Use the following credentials to test authenticated endpoints:
+
+## Admin User
+
+```json
+{
+  "email": "admin@test.com",
+  "password": "Admin123*"
+}
+```
+
+---
+
+# Authentication Flow
+
+## Step 1 — Login
+
+Endpoint:
+
+```plaintext
+POST /auth/login
+```
+
+Example request:
+
+```json
+{
+  "email": "admin@test.com",
+  "password": "admin123"
+}
+```
+
+The API will return a JWT access token.
+
+---
+
+## Step 2 — Authorize Swagger
+
+Click the **Authorize** button in Swagger and paste the token using this format:
+
+```plaintext
+Bearer YOUR_TOKEN
+```
+
+---
+
+## Step 3 — Test Protected Endpoints
+
+After authentication you can access:
+
+```plaintext
+GET /auth/profile
+GET /auth/admin
+GET /prescriptions/metrics
+```
+
+---
+
 # Main Endpoints
 
 ## Authentication
