@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  doctor
+  patient
+}
+
+enum PrescriptionStatus {
+  active
+  consumed
+  expired
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  prescriptionsAsDoctor Prescription[] @relation("DoctorPrescriptions")
+
+  prescriptionsAsPatient Prescription[] @relation("PatientPrescriptions")
+}
+
+model Prescription {
+  id String @id @default(uuid())
+
+  medicationName String
+  dosage         String
+  frequency      String
+  notes          String?
+
+  status PrescriptionStatus @default(active)
+
+  prescribedAt DateTime @default(now())
+  consumedAt   DateTime?
+
+  doctorId String
+  patientId String
+
+  doctor User @relation("DoctorPrescriptions", fields: [doctorId], references: [id])
+  patient User @relation("PatientPrescriptions", fields: [patientId], references: [id])
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
